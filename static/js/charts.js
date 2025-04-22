@@ -79,6 +79,7 @@ function createIncomeExpenseChart(data) {
     const chartData = {
         labels: ['Income', 'Expenses', 'Balance'],
         datasets: [{
+            label: 'Amount (£)',  // Adding label to prevent "undefined" in legend
             data: [
                 data.total_income || 0,
                 data.total_expenses || 0,
@@ -188,6 +189,7 @@ function createExpenseCategoriesChart(data) {
     const chartData = {
         labels: labels,
         datasets: [{
+            label: 'Expense Categories', // Adding label to prevent "undefined" in legend
             data: values,
             backgroundColor: backgroundColors,
             borderColor: backgroundColors.map(color => color.replace('0.7', '1')),
@@ -262,10 +264,11 @@ function createIncomeCategoriesChart(data) {
         backgroundColors.push(chartColors.categoryColors[i % chartColors.categoryColors.length]);
     }
     
-    // Prepare data
+    // Prepare data - FIXED HERE
     const chartData = {
         labels: labels,
         datasets: [{
+            label: 'Income Categories', // Adding label to prevent "undefined" in legend
             data: values,
             backgroundColor: backgroundColors,
             borderColor: backgroundColors.map(color => color.replace('0.7', '1')),
@@ -371,6 +374,7 @@ function createTrendsChart() {
                 maintainAspectRatio: false,
                 plugins: {
                     legend: {
+                        display: true, // Set to false if you want to hide the legend completely
                         position: 'top',
                         labels: {
                             font: {

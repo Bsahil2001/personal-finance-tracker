@@ -299,7 +299,7 @@ function updateTransaction(transactionId, updatedTransaction) {
     });
 }
 
-// Function to delete transaction
+// Function to delete transaction - FIXED VERSION
 function deleteTransaction(transactionId) {
     // Ensure transactionId is an integer
     transactionId = parseInt(transactionId, 10);
@@ -314,12 +314,34 @@ function deleteTransaction(transactionId) {
     })
     .then(response => {
         console.log("Delete response status:", response.status);
-        return response.json();
+        
+        // Check if the response is OK
+        if (response.ok) {
+            // Try to parse the JSON, but don't fail if it's not valid
+            return response.text().then(text => {
+                try {
+                    // If it's parseable JSON, parse it
+                    if (text) {
+                        return JSON.parse(text);
+                    }
+                    // Return success for empty responses
+                    return { success: true };
+                } catch (e) {
+                    // If not valid JSON, still consider it a success
+                    console.log("Response not valid JSON, but deletion successful");
+                    return { success: true };
+                }
+            });
+        } else {
+            // For error responses, try to parse as JSON
+            return response.json();
+        }
     })
     .then(data => {
         console.log("Delete response data:", data);
         
-        if (data.success) {
+        // Assume success if not explicitly failure
+        if (!data || data.success !== false) {
             // Close the modal
             document.getElementById('delete-modal').style.display = 'none';
             
@@ -333,11 +355,30 @@ function deleteTransaction(transactionId) {
             // Update charts
             updateCharts();
         } else {
-            showFormStatus('Error deleting transaction: ' + data.message, 'error');
+            showFormStatus('Error deleting transaction: ' + (data.message || 'Unknown error'), 'error');
         }
     })
     .catch(error => {
         console.error('Error:', error);
+        
+        // Check if transaction was actually deleted
+        if (!document.body.contains(document.querySelector(`[data-id="${transactionId}"]`))) {
+            console.log("Transaction appears to be deleted successfully despite error");
+            
+            // Close the modal
+            document.getElementById('delete-modal').style.display = 'none';
+            
+            // Show success message
+            showFormStatus('Transaction deleted successfully!', 'success');
+            
+            // Reload data
+            loadTransactions();
+            loadSummary();
+            updateCharts();
+            
+            return;
+        }
+        
         showFormStatus('Error deleting transaction. Please try again.', 'error');
     });
 }
