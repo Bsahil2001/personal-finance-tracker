@@ -1,34 +1,26 @@
 [
     {
-        "id": 1744874468.236736,
-        "title": "fruits",
-        "amount": -5.0,
-        "type": "expense",
-        "category": "Food & Dining",
-        "date": "2025-04-17"
-    },
-    {
-        "id": 1744877763.47529,
-        "title": "clubbing ",
-        "amount": -20.0,
-        "type": "expense",
-        "category": "Entertainment",
-        "date": "2025-04-17"
-    },
-    {
-        "id": 1744877786.460671,
-        "title": "Salary",
-        "amount": 1100.0,
+        "id": 1744904628.80285,
+        "title": "salary",
+        "amount": 1200.0,
         "type": "income",
         "category": "Salary",
-        "date": "2025-04-17"
+        "date": "2025-04-15"
     },
     {
-        "id": 1744878230.602895,
-        "title": "cleaning material",
-        "amount": -30.0,
+        "id": 1744904652.781463,
+        "title": "DINNER",
+        "amount": -140.0,
         "type": "expense",
-        "category": "Utilities",
-        "date": "2025-04-15"
+        "category": "Food & Dining",
+        "date": "2025-04-16"
+    },
+    {
+        "id": 1744904678.308118,
+        "title": "GROCERY",
+        "amount": -200.0,
+        "type": "expense",
+        "category": "Housing",
+        "date": "2025-04-17"
     }
 ]
