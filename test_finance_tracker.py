@@ -433,3 +433,24 @@ def test_get_summary_with_date_filter(auth_client, sample_transactions):
     assert data['total_income'] == 0
     assert data['total_expenses'] == 135.50
     assert data['balance'] == -135.50
+
+    def test_transaction_with_notes(auth_client):
+    """Test adding a transaction with notes."""
+    transaction_data = {
+        'title': 'Transaction with Notes',
+        'amount': 75.00,
+        'type': 'expense',
+        'category': 'Entertainment',
+        'date': '2025-04-25',
+        'notes': 'Movie night with friends'
+    }
+    
+    response = auth_client.post('/transactions', 
+                              json=transaction_data,
+                              content_type='application/json')
+    
+    assert response.status_code == 200
+    
+    data = json.loads(response.data)
+    assert data['success'] is True
+    assert data['transaction']['notes'] == 'Movie night with friends'
