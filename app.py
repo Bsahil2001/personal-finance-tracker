@@ -32,6 +32,7 @@ class User(db.Model):
         return check_password_hash(self.password_hash, password)
 
 # Transaction Model - Modified to avoid 'transaction' reserved keyword
+# Transaction Model - Modified to avoid 'transaction' reserved keyword
 class Transaction(db.Model):
     __tablename__ = 'transactions'  # Explicitly set table name to avoid reserved keyword
     
@@ -41,6 +42,7 @@ class Transaction(db.Model):
     type = db.Column(db.String(10), nullable=False)  # 'income' or 'expense'
     category = db.Column(db.String(50), nullable=False)
     date = db.Column(db.String(10), nullable=False)  # Format: YYYY-MM-DD
+    notes = db.Column(db.String(200))  # New field added
     created_at = db.Column(db.DateTime, default=datetime.now)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     
@@ -51,7 +53,8 @@ class Transaction(db.Model):
             'amount': self.amount,
             'type': self.type,
             'category': self.category,
-            'date': self.date
+            'date': self.date,
+            'notes': self.notes  # Include notes in the dictionary
         }
 
 # Create the database tables
